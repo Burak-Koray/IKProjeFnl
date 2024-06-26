@@ -1,0 +1,83 @@
+﻿@model IKProje.Models.Sicil
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Personel Ekle</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Flatpickr CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+</head>
+<body>
+
+    <div class="container mt-5">
+        <h1>Personel Ekle</h1>
+        <form method="post">
+
+            <div class="form-group">
+                <label asp-for="Sicilno" class="form-label">Sicil No</label>
+                <input asp-for="Sicilno" class="form-control" />
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Adisoyadi" class="form-label">Ad Soyad</label>
+                <input asp-for="Adisoyadi" class="form-control" />
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Bolumadi" class="form-label">Departman Adı</label>
+                <select asp-for="Bolumadi" class="form-control" asp-items="ViewBag.Bolumler">
+                    <option value="">Lütfen seçiniz</option>
+                </select>
+            </div>
+            <div class="form-group">
+                 <label asp-for="Ozelkod" class="form-label">Çalışan Statüsü</label>
+                <select asp-for="Ozelkod" class="form-control" asp-items="ViewBag.Ozelkod">
+                    <option value="">Lütfen seçiniz</option>
+                </select>
+             
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Mesaiadi" class="form-label">Mesai Türü</label>
+                <select asp-for="Mesaiadi" class="form-control" asp-items="ViewBag.mesaituru">
+                    <option value="">Lütfen seçiniz</option>
+                </select>
+            </div>        
+
+            <div class="form-group">
+                <label asp-for="Giristarihi" class="form-label">Giriş Tarihi</label>
+                <input type="text" id="giristarihi" name="Giristarihi" class="form-control" autocomplete="off" />
+            </div>
+
+            <div class="form-group">
+                <button type="submit" class="btn btn-primary">Kaydet</button>
+            </div>
+
+        </form>
+    </div>
+
+    <!-- jQuery -->
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <!-- Flatpickr JS -->
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+    <!-- Moment JS for Flatpickr -->
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr/dist/plugins/moment/moment.min.js"></script>
+    <!-- Turkish locale for Flatpickr -->
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr/dist/l10n/tr.js"></script>
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            flatpickr("#giristarihi", {
+                dateFormat: "Ymd",
+                altFormat: "Ymd",
+                locale: "tr",
+                allowInput: true
+            });
+        });
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,202 @@
+﻿@model List<IKProje.Models.Sicil>
+
+@{
+    int nextPage = Convert.ToInt32(ViewBag.PageNumber) + 1;
+    int prevPage = Convert.ToInt32(ViewBag.PageNumber) - 1;
+}
+
+<h1>Personeller</h1>
+
+<form method="get" asp-controller="Personel" asp-action="List">
+    <div class="container mt-3">
+        <div class="row">
+            <div class="col col-md-5 d-flex">
+                <input type="text" class="form-control form-control-sm me-1" name="searchQuery" value="@ViewBag.SearchQuery" style="width: 150px;">
+                <button type="submit" class="btn btn-warning btn-sm me-1">Ara</button>
+                <a href="@Url.Action("List", "Personel")" class="btn btn-secondary btn-sm me-1">Temizle</a>
+                <button type="button" onclick="exportToExcel()" class="btn btn-success btn-sm me-1" id="exportToExcel()">Excel'e Aktar</button>
+            </div>
+        </div>
+    </div>
+</form>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                <div class="d-flex justify-content-between align-items-center">
+                    <span>Sicil No</span>
+                    <div class="d-inline-flex align-items-center">
+                        <a class="btn btn-light me-1 p-1" asp-controller="Personel" asp-action="List" asp-route-sortBy="SicilNo" asp-route-sortDirection="Asc" asp-route-searchQuery="@ViewBag.SearchQuery" data-sort-by="SicilNo" data-sort-direction="Asc">
+                            <img src="~/arrow-up.svg" />
+                        </a>
+                        <a class="btn btn-light p-1" asp-controller="Personel" asp-action="List" asp-route-sortBy="SicilNo" asp-route-sortDirection="Desc" asp-route-searchQuery="@ViewBag.SearchQuery" data-sort-by="SicilNo" data-sort-direction="Desc">
+                            <img src="~/arrow-down.svg" />
+                        </a>
+                    </div>
+                </div>
+            </th>
+
+            <th>
+                <div class="d-flex justify-content-between align-items-center">
+                    <span>Ad Soyad</span>
+                    <div class="d-inline-flex align-items-center">
+                        <a class="btn btn-light me-1 p-1" asp-controller="Personel" asp-action="List" asp-route-sortBy="AdiSoyadi" asp-route-sortDirection="Asc" asp-route-searchQuery="@ViewBag.SearchQuery" data-sort-by="AdiSoyadi" data-sort-direction="Asc">
+                            <img src="~/arrow-up.svg" />
+                        </a>
+                        <a class="btn btn-light p-1" asp-controller="Personel" asp-action="List" asp-route-sortBy="AdiSoyadi" asp-route-sortDirection="Desc" asp-route-searchQuery="@ViewBag.SearchQuery" data-sort-by="AdiSoyadi" data-sort-direction="Desc">
+                            <img src="~/arrow-down.svg" />
+                        </a>
+                    </div>
+                </div>
+            </th>
+
+            <th>
+                <div class="d-flex justify-content-between align-items-center">
+                    <span>Departman Adı</span>
+                    <div class="d-inline-flex align-items-center">
+                        <a class="btn btn-light me-1 p-1" asp-controller="Personel" asp-action="List" asp-route-sortBy="BolumAdi" asp-route-sortDirection="Asc" asp-route-searchQuery="@ViewBag.SearchQuery" data-sort-by="BolumAdi" data-sort-direction="Asc">
+                            <img src="~/arrow-up.svg" />
+                        </a>
+                        <a class="btn btn-light p-1" asp-controller="Personel" asp-action="List" asp-route-sortBy="BolumAdi" asp-route-sortDirection="Desc" asp-route-searchQuery="@ViewBag.SearchQuery" data-sort-by="BolumAdi" data-sort-direction="Desc">
+                            <img src="~/arrow-down.svg" />
+                        </a>
+                    </div>
+                </div>
+            </th>
+
+            <th>
+                <div class="d-flex justify-content-between align-items-center">
+                    <span>Çalışan Statüsü</span>
+                    <div class="d-inline-flex align-items-center">
+                        <a class="btn btn-light me-1 p-1" asp-controller="Personel" asp-action="List" asp-route-sortBy="Ozelkod" asp-route-sortDirection="Asc" asp-route-searchQuery="@ViewBag.SearchQuery" data-sort-by="Ozelkod" data-sort-direction="Asc">
+                            <img src="~/arrow-up.svg" />
+                        </a>
+                        <a class="btn btn-light p-1" asp-controller="Personel" asp-action="List" asp-route-sortBy="Ozelkod" asp-route-sortDirection="Desc" asp-route-searchQuery="@ViewBag.SearchQuery" data-sort-by="Ozelkod" data-sort-direction="Desc">
+                            <img src="~/arrow-down.svg" />
+                        </a>
+                    </div>
+                </div>
+            </th>
+
+            <th>
+                <div class="d-flex justify-content-between align-items-center">
+                    <span>Mesai Türü</span>
+                    <div class="d-inline-flex align-items-center">
+                        <a class="btn btn-light me-1 p-1" asp-controller="Personel" asp-action="List" asp-route-sortBy="Mesaiadi" asp-route-sortDirection="Asc" asp-route-searchQuery="@ViewBag.SearchQuery" data-sort-by="Mesaiadi" data-sort-direction="Asc">
+                            <img src="~/arrow-up.svg" />
+                        </a>
+                        <a class="btn btn-light p-1" asp-controller="Personel" asp-action="List" asp-route-sortBy="Mesaiadi" asp-route-sortDirection="Desc" asp-route-searchQuery="@ViewBag.SearchQuery" data-sort-by="Mesaiadi" data-sort-direction="Desc">
+                            <img src="~/arrow-down.svg" />
+                        </a>
+                    </div>
+                </div>
+            </th>
+
+            <th>
+                <div class="d-flex justify-content-between align-items-center">
+                    <span>Giriş Tarihi</span>
+                    <div class="d-inline-flex align-items-center">
+                        <a class="btn btn-light me-1 p-1" asp-controller="Personel" asp-action="List" asp-route-sortBy="Giristarihi" asp-route-sortDirection="Asc" asp-route-searchQuery="@ViewBag.SearchQuery" data-sort-by="Giristarihi" data-sort-direction="Asc">
+                            <img src="~/arrow-up.svg" />
+                        </a>
+                        <a class="btn btn-light p-1" asp-controller="Personel" asp-action="List" asp-route-sortBy="Giristarihi" asp-route-sortDirection="Desc" asp-route-searchQuery="@ViewBag.SearchQuery" data-sort-by="Giristarihi" data-sort-direction="Desc">
+                            <img src="~/arrow-down.svg" />
+                        </a>
+                    </div>
+                </div>
+            </th>
+
+            <th>
+                <div class="d-flex justify-content-between align-items-center">
+                    <span>Çıkış Tarihi</span>
+                    <div class="d-inline-flex align-items-center">
+                        <a class="btn btn-light me-1 p-1" asp-controller="Personel" asp-action="List" asp-route-sortBy="Cikistarihi" asp-route-sortDirection="Asc" asp-route-searchQuery="@ViewBag.SearchQuery" data-sort-by="Cikistarihi" data-sort-direction="Asc">
+                            <img src="~/arrow-up.svg" />
+                        </a>
+                        <a class="btn btn-light p-1" asp-controller="Personel" asp-action="List" asp-route-sortBy="Cikistarihi" asp-route-sortDirection="Desc" asp-route-searchQuery="@ViewBag.SearchQuery" data-sort-by="Cikistarihi" data-sort-direction="Desc">
+                            <img src="~/arrow-down.svg" />
+                        </a>
+                    </div>
+                </div>
+            </th>
+
+            <th>İşlem</th>
+        </tr>
+    </thead>
+    <tbody id="personelTableBody">
+        @foreach (var personel in Model)
+        {
+            <tr>
+                <td>@personel.Sicilno</td>
+                <td>@personel.Adisoyadi</td>
+                <td>@personel.Bolumadi</td>
+                <td>@personel.Ozelkod</td>
+                <td>@personel.Mesaiadi</td>
+                <td>@personel.Giristarihi</td>
+                <td>@personel.Cikistarihi</td>
+                <td>
+                    <div class="btn-group">
+                        <button type="button" class="btn btn-xs btn-primary" onclick="window.location.href='@Url.Action("Edit", "Personel", new { id = personel.SId })'">Düzenle</button>
+                    </div>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<nav aria-label="Page navigation example">
+    <ul class="pagination">
+        <li class="page-item @(ViewBag.PageNumber == 1 ? "disabled" : "")">
+            <a class="page-link"
+               asp-controller="Personel"
+               asp-action="List"
+               asp-route-pageNumber="@(ViewBag.PageNumber - 1)"
+               asp-route-pageSize="@ViewBag.PageSize"
+               asp-route-sortBy="@ViewBag.SortBy"
+               asp-route-sortDirection="@ViewBag.SortDirection"
+               asp-route-searchQuery="@ViewBag.SearchQuery">
+                Geri
+            </a>
+        </li>
+
+        @for (int i = Math.Max(1, ViewBag.PageNumber - 1); i <= Math.Min(ViewBag.TotalPages, ViewBag.PageNumber + 1); i++)
+        {
+            <li class="page-item @(i == ViewBag.PageNumber ? "active" : "")">
+                <a class="page-link"
+                   asp-controller="Personel"
+                   asp-action="List"
+                   asp-route-pageNumber="@i"
+                   asp-route-pageSize="@ViewBag.PageSize"
+                   asp-route-sortBy="@ViewBag.SortBy"
+                   asp-route-sortDirection="@ViewBag.SortDirection"
+                   asp-route-searchQuery="@ViewBag.SearchQuery">
+                    @i
+                </a>
+            </li>
+        }
+
+        <li class="page-item @(ViewBag.PageNumber == ViewBag.TotalPages ? "disabled" : "")">
+            <a class="page-link"
+               asp-controller="Personel"
+               asp-action="List"
+               asp-route-pageNumber="@(ViewBag.PageNumber + 1)"
+               asp-route-pageSize="@ViewBag.PageSize"
+               asp-route-sortBy="@ViewBag.SortBy"
+               asp-route-sortDirection="@ViewBag.SortDirection"
+               asp-route-searchQuery="@ViewBag.SearchQuery">
+                İleri
+            </a>
+        </li>
+    </ul>
+</nav>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    function exportToExcel() {
+        var sortBy = $('[data-sort-by][data-sort-direction]').first().data('sort-by');
+        var sortDirection = $('[data-sort-by][data-sort-direction]').first().data('sort-direction');
+        var url = '@Url.Action("ExportToExcel", "Excel")' + '?searchQuery=' + '@ViewBag.SearchQuery' + '&sortBy=' + sortBy + '&sortDirection=' + sortDirection;
+        window.location.href = url;
+    }
+</script>
